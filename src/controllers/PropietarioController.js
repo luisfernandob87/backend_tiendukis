@@ -1,11 +1,18 @@
 const { Propietario } = require('../models');
+const bcrypt = require('bcryptjs');
 
 const PropietarioController = {
   async create(req, res) {
     try {
+      if (req.body.password) {
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+      }
       const propietario = await Propietario.create(req.body);
       res.status(201).json(propietario);
     } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(400).json({ error: 'Correo ya existe' });
+      }
       res.status(500).json({ error: error.message });
     }
   },

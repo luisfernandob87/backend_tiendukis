@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    usuario: DataTypes.STRING,
+    usuario: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: DataTypes.STRING,
     estado: DataTypes.BOOLEAN,
   });
