@@ -7,6 +7,8 @@ const Usuario = require('./Usuario')(sequelize);
 const UsuarioTienda = require('./UsuarioTienda')(sequelize);
 const Producto = require('./Producto')(sequelize);
 const Movimiento = require('./Movimiento')(sequelize);
+const Categoria = require('./Categoria')(sequelize);
+const Proveedor = require('./Proveedor')(sequelize);
 
 // Relaciones
 Propietario.hasMany(Tienda, { foreignKey: 'ID_propietario' });
@@ -33,6 +35,12 @@ Pago.belongsTo(Tienda, { foreignKey: 'ID_tienda' });
 Plan.hasMany(Pago, { foreignKey: 'ID_plan' });
 Pago.belongsTo(Plan, { foreignKey: 'ID_plan' });
 
+Proveedor.hasMany(Producto, { foreignKey: 'ID_proveedor' });
+Producto.belongsTo(Proveedor, { foreignKey: 'ID_proveedor' });
+
+Categoria.hasMany(Producto, { foreignKey: 'ID_categoria' });
+Producto.belongsTo(Categoria, { foreignKey: 'ID_categoria' });
+
 module.exports = {
   sequelize,
   Plan,
@@ -43,4 +51,6 @@ module.exports = {
   UsuarioTienda,
   Producto,
   Movimiento,
+  Categoria,
+  Proveedor,
 };
